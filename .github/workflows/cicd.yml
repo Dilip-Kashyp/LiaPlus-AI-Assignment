@@ -19,24 +19,6 @@ jobs:
 
       - name: Install dependencies
         run: npm install
-
-      - name: Set environment variables
-        env:
-          DB_HOST: ${{ vars.DB_HOST }}
-          DB_USER: ${{ vars.DB_USER }}
-          DB_DATABASE: ${{ vars.DB_DATABASE }}
-          DB_PASSWORD: ${{ vars.DB_PASSWORD }}
-          DB_PORT: ${{ vars.DB_PORT }}
-          DB_SSL: ${{ vars.DB_SSL }}
-          PORT: ${{ vars.PORT }}
-        run: |
-          echo "DB_HOST=$DB_HOST" >> $GITHUB_ENV
-          echo "DB_USER=$DB_USER" >> $GITHUB_ENV
-          echo "DB_DATABASE=$DB_DATABASE" >> $GITHUB_ENV
-          echo "DB_PORT=$DB_PORT" >> $GITHUB_ENV
-          echo "DB_SSL=$DB_SSL" >> $GITHUB_ENV
-          echo "PORT=$PORT" >> $GITHUB_ENV
-
       - name: Deploy to Azure Web App Service
         uses: azure/webapps-deploy@v2
         with:
