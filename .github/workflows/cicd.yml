@@ -30,6 +30,7 @@ jobs:
           echo "DB_PORT=${{ secrets.DB_PORT }}" >> $GITHUB_ENV
           echo "DB_SSL=${{ secrets.DB_SSL }}" >> $GITHUB_ENV
           echo "PORT=${{ secrets.PORT }}" >> $GITHUB_ENV
+          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> $GITHUB_ENV
 
       - name: Deploy to Azure Web App Service
         uses: azure/webapps-deploy@v2
