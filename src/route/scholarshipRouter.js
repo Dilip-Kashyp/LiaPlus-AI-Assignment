@@ -4,6 +4,7 @@ import {
   applyScholarship,
 } from "../controller/scholershipsController.js";
 
+
 const router = Router();
 
 

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Available Scholarships</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .scholarship-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px 0;
+        }
+        .scholarship-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .scholarship-title {
+            color: #2c3e50;
+            margin-top: 0;
+        }
+        .scholarship-amount {
+            color: #27ae60;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        .scholarship-deadline {
+            color: #e74c3c;
+        }
+        .loading {
+            text-align: center;
+            padding: 20px;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Available Scholarships</h1>
+        <div id="scholarships" class="scholarship-grid">
+            <div class="loading">Loading scholarships...</div>
+        </div>
+    </div>
+
+    <script>
+        // Function to fetch scholarships from the endpoint
+        async function fetchScholarships() {
+            try {
+                const response = await fetch('/api/v1/scholarships/all-scholarships');
+                const result = await response.json();
+                displayScholarships(result.data);
+            } catch (error) {
+                console.error('Error fetching scholarships:', error);
+                document.getElementById('scholarships').innerHTML = 
+                    '<div class="error">Error loading scholarships. Please try again later.</div>';
+            }
+        }
+
+        // Function to display scholarships
+        function displayScholarships(scholarships) {
+            const scholarshipsContainer = document.getElementById('scholarships');
+            
+            if (!scholarships || scholarships.length === 0) {
+                scholarshipsContainer.innerHTML = '<div>No scholarships available at the moment.</div>';
+                return;
+            }
+
+            const scholarshipHTML = scholarships.map(scholarship => `
+                <div class="scholarship-card">
+                    <h2 class="scholarship-title">${scholarship.name}</h2>
+                    <p>${scholarship.description || 'No description available'}</p>
+                    <button onclick="applyForScholarship(${scholarship.id})">Apply Now</button>
+                </div>
+            `).join('');
+
+            scholarshipsContainer.innerHTML = scholarshipHTML;
+        }
+
+        // Function to handle scholarship application
+        function applyForScholarship(scholarshipId) {
+            // Add your application logic here
+            console.log(`Applying for scholarship ${scholarshipId}`);
+            alert('Application feature coming soon!');
+        }
+
+        // Fetch scholarships when the page loads
+        document.addEventListener('DOMContentLoaded', fetchScholarships);
+    </script>
+</body>
+</html>

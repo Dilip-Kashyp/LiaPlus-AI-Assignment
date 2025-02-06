@@ -1,4 +1,3 @@
-import db from "../database/db.js";
 import asyncHandler from "../utils/asyncHandler.js";
 import {
   RESPONSE_ERROR,
@@ -6,22 +5,13 @@ import {
   RESPONSE_SUCCESS_APPLY_SCHOLARSHIP,
   RESPONSE_NO_SCHOLARSHIPS_FOUND,
 } from "../constants/constants.js";
-import { generateSQLQuery } from "../ai/genai.js";
+import { models } from "../schema/index.js";
+
+
 
 const getAllScholarships = asyncHandler(async (req, res) => {
   try {
-    const { searchQuery } = req.body;
-    let scholarships;
-
-    if (searchQuery) {
-      const sqlQuery = await generateSQLQuery(searchQuery);
-      console.log(sqlQuery);
-      const results = await db.query(sqlQuery);
-      scholarships = results.rows;
-    } else {
-      const results = await db.query("SELECT * FROM scholarships  ORDER BY deadline ASC, amount DESC");
-      scholarships = results.rows;
-    }
+    const scholarships = await models.Scholarship.findAll();
 
     if (!scholarships || scholarships.length === 0) {
       return res.status(404).json({

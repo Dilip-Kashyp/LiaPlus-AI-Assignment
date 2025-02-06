@@ -3,7 +3,6 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import { sequelize } from './src/schema/index.js';
 import scholarshipRoutes from './src/route/scholarshipRouter.js';
-import userRoutes from './src/route/userRouter.js';
 
 dotenv.config();
 
@@ -12,9 +11,16 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Serve static files from public directory
+app.use(express.static('public'));
+
 // Routes
 app.use('/api/v1/scholarships', scholarshipRoutes);
-app.use('/api/v1/users', userRoutes);
+
+// Add a route to serve the scholarships page
+app.get('/', (req, res) => {
+    res.sendFile('scholarship.html', { root: './public' });
+});
 
 // Database connection
 try {

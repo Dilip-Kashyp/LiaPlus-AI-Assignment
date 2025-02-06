@@ -1,4 +1,3 @@
-// models/index.js
 import { Sequelize } from "sequelize";
 import { User } from "./userSchema.js";
 import { Scholarship } from './scholershipSchema.js';
