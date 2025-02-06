@@ -6,8 +6,8 @@
     "node": "18.x"
   },
   "scripts": {
-    "dev": "nodemon /src/index.js",
-    "start": "node index.js"
+    "dev": "node init && nodemon /src/index.js",
+    "start": "node init && node index.js"
   },
   "author": "Dilip Kumar",
   "license": "ISC",
